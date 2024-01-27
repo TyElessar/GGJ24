@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{2e937351-ade9-4f49-9237-0b164cc67c73}">
+		<property name="name">
+			<value>Cancelado</value>
+		</property>
+		<relationship name="folder">
+			<destination>{5f06cdd9-9c91-42ec-9f2c-818b897c421c}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{cf1d5e56-e5fa-4996-b8d6-58cf6b53039c}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{cf1d5e56-e5fa-4996-b8d6-58cf6b53039c}">
+		<property name="initialValue">
+			<value>1</value>
+		</property>
+	</object>
+</objects>

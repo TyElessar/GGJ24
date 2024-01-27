@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{40edcb3a-ac0b-46b3-9781-d87b12add7e8}">
+		<property name="assetPath">
+			<value>Minecraft Steve OOF Sound Effect.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.78367346938775506</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{27fd563c-c9ae-4be9-a994-aa5ca8b5e5de}</destination>
+		</relationship>
+	</object>
+</objects>

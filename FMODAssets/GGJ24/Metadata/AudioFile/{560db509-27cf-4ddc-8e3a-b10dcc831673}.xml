@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{560db509-27cf-4ddc-8e3a-b10dcc831673}">
+		<property name="assetPath">
+			<value>Polno.ogg</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>25.714285714285715</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{27fd563c-c9ae-4be9-a994-aa5ca8b5e5de}</destination>
+		</relationship>
+	</object>
+</objects>
