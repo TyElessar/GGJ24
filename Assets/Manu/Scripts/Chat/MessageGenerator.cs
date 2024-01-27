@@ -11,9 +11,11 @@ public class MessageGenerator : MonoBehaviour {
   [SerializeField] private TextAsset negative_;
   [SerializeField] private TextAsset color_;
 
-  [SerializeField] private GameObject messagePrefab_;
+  [SerializeField] private GameObject textMessagePrefab_;
+  [SerializeField] private GameObject emoteMessagePrefab_;
   [SerializeField] private List<GameObject> messageList_;
   private int maxMessages_;
+  private int totalEmotes_ = 14; // Ultrahardcoded
 
   private string[] userPoolText_;
   private string[] positivePoolText_;
@@ -47,10 +49,10 @@ public class MessageGenerator : MonoBehaviour {
 
     //This is for testing only
     for(int i = 0; i < userFinalPoolList_.Count; ++i){
-      GameObject go = Instantiate(messagePrefab_);
+      GameObject go = Instantiate(textMessagePrefab_);
       Transform child_tr = go.transform.GetChild(0);
       child_tr.gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = userFinalPoolList_[i] + chaterinoPoolText_[0];
-      messagePrefab_.SetActive(false);
+      textMessagePrefab_.SetActive(false);
       DontDestroyOnLoad(go);
       messageList_.Add(go);
     }
@@ -73,5 +75,13 @@ public class MessageGenerator : MonoBehaviour {
     string nick = color + userPoolText_[index] + "</color>";
     return nick;
   }
+
+  private void InitializeEmotePool(){
+    
+  }
+
+
+
+
 
 }
