@@ -10,15 +10,16 @@ public class StatsManager : MonoBehaviour
     bool flat, crypto;
     int viewersToAdd = 1;
 
-    [SerializeField] Animator irl_Anim, minecraft_Anim;
+    [SerializeField] Animator justChatting_Anim, irl_Anim, minecraft_Anim, lol_Anim;
+    [SerializeField] GameObject micro;
     [SerializeField] float actionCountdown;
 
     [SerializeField] GameObject[] donationNotifs;
     bool don20_0 = false, don20_1 = false, don50_0 = false, don50_1 = false, don50_2 = false, don100_0 = false, don100_1 = false, don100_2 = false,
      don1000_0 = false, don1000_1 = false, don1000_2 = false, don1000_3 = false, don1000_4 = false;
 
-    [SerializeField] Image[] imagesFromStream;
-    [SerializeField] Sprite newChair;
+    [SerializeField] Image[] imagesForLigthen, imagesForLedsBG, imagesForChair;
+    [SerializeField] Sprite newChair, ledsBG;
 
     [SerializeField] TextMeshProUGUI moneyText;
     [SerializeField] Button[] updatesButtons;
@@ -59,13 +60,17 @@ public class StatsManager : MonoBehaviour
 
         if(actionCountdown > 0f)
         {
+            justChatting_Anim.SetBool("action", true);
             irl_Anim.SetBool("action", true);
             minecraft_Anim.SetBool("action", true);
+            lol_Anim.SetBool("action", true);
         }
         else
         {
+            justChatting_Anim.SetBool("action", false);
             irl_Anim.SetBool("action", false);
             minecraft_Anim.SetBool("action", false);
+            lol_Anim.SetBool("action", false);
         }
 
         actionCountdown = actionCountdown - 1f * Time.deltaTime;
@@ -119,23 +124,31 @@ public class StatsManager : MonoBehaviour
         if (whichAdd == "lightring")
         {
             viewersToAdd += 1;
-            for (int i = 0; i < imagesFromStream.Length; i++)
+            for (int i = 0; i < imagesForLigthen.Length; i++)
             {
-                imagesFromStream[i].color = Color.white;
+                imagesForLigthen[i].color = Color.white;
             }
         }
         if (whichAdd == "microphone")
         {
+            micro.SetActive(true);
             viewersToAdd += 2;
         }
         if (whichAdd == "gamingchair")
         {
             viewersToAdd += 4;
-            imagesFromStream[1].sprite = newChair;
+            for (int i = 0; i < imagesForChair.Length; i++)
+            {
+                imagesForChair[i].sprite = newChair;
+            }
         }
         if (whichAdd == "focus")
         {
             viewersToAdd += 8;
+            for (int i = 0; i < imagesForLedsBG.Length; i++)
+            {
+                imagesForLedsBG[i].sprite = ledsBG;
+            }
         }
         if (whichAdd == "splitscreen")
         {

@@ -3,30 +3,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
-  public static GameManager Instance;
-
-  void Awake(){
-    DontDestroyOnLoad(this);
-    if(null == Instance)
-      Instance = this;
-    else 
-      Destroy(gameObject);
-  }
-
-  void OnEnable(){
-    SceneManager.sceneLoaded += OnSceneLoad;
-  }
-
-  void OnSceneLoad(Scene scene, LoadSceneMode mode){
-
-  }
-
-  void OnDestroy(){
-    SceneManager.sceneLoaded -= OnSceneLoad;
-  }
-
-  public void LoadScene(){
-    SceneManager.LoadScene(1, LoadSceneMode.Single);
+  public void ChangeLevel(int i){
+    SceneManager.LoadScene(i, LoadSceneMode.Single);
   }
 
 }
