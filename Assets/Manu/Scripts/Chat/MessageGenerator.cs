@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -9,12 +8,13 @@ public class MessageGenerator : MonoBehaviour {
 
   [SerializeField] private GameObject messagePrefab_;
   [SerializeField] private List<GameObject> messageList_;
-  [SerializeField] private byte maxMessages_;
+  private int maxMessages_;
 
   private string[] messagePoolText_;
 
   void Awake(){
     messagePoolText_ = chaterino_.text.Split(';');
+    maxMessages_ = messagePoolText_.Length;
 
     messageList_ = new List<GameObject>();
     for(int i = 0; i < maxMessages_; ++i){
@@ -26,7 +26,6 @@ public class MessageGenerator : MonoBehaviour {
     }
 
   } 
-
 
   public GameObject GetMessage(){
     foreach(GameObject go in messageList_){

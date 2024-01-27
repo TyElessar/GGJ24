@@ -432,7 +432,7 @@ GameObject:
   - component: {fileID: 826406109}
   - component: {fileID: 826406108}
   m_Layer: 0
-  m_Name: Skippy
+  m_Name: ElChurumbel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -450,9 +450,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 896c012e54778114a8e9b49b7c3b108c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chaterino_: {fileID: 4900000, guid: 7a47938715b9efb46b60678be01bf61a, type: 3}
   messagePrefab_: {fileID: 2458376628017715261, guid: 64aa7df3eaeeda04d941aa16ee529c29, type: 3}
   messageList_: []
-  maxMessages_: 10
 --- !u!4 &826406109
 Transform:
   m_ObjectHideFlags: 0
