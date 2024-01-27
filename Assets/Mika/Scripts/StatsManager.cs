@@ -6,7 +6,7 @@ using TMPro;
 
 public class StatsManager : MonoBehaviour
 {
-    public int viewers, money, strikes;
+    public int viewers, money, strikes, flats;
 
     [SerializeField] float streamQuality;
     [SerializeField] TextMeshProUGUI moneyText;
@@ -18,10 +18,14 @@ public class StatsManager : MonoBehaviour
     [SerializeField] Sprite[] categorySpritesNonSelected;
     [SerializeField] Sprite[] categorySpritesSelected;
 
+    [SerializeField] TextMeshProUGUI viewersText;
+
     [SerializeField] TextMeshProUGUI plusText;
     [SerializeField] GameObject plusTextParent;
 
     [SerializeField] Image banned;
+
+    int moneyRatio = 100;
 
     private void Start()
     {
@@ -33,9 +37,25 @@ public class StatsManager : MonoBehaviour
     {
         CheckMoney();
         CheckStrikes();
-        print(viewers);
+
         plusTextParent.transform.position = Input.mousePosition;
-        moneyText.text = new string(money + "€");
+
+        if (money < 10000)
+        {
+            moneyText.text = new string(money+ " €");
+        }
+        else
+        {
+            moneyText.text = new string(money / 1000 + "k " + "€");
+        }
+        if (viewers < 10000)
+        {
+            viewersText.text = new string(viewers.ToString());
+        }
+        else
+        {
+            viewersText.text = new string(viewers/1000 + "k");
+        }
         categoryCoolDown = categoryCoolDown - 1 * Time.deltaTime;
     }
     public void PlusViewers()
@@ -117,6 +137,14 @@ public class StatsManager : MonoBehaviour
     {
         streamQuality += quality;
     }
+    public void AddMerch()
+    {
+        moneyRatio = moneyRatio - 25;
+    }
+    public void AddFlat()
+    {
+        flats++;
+    }
     public void ChangeCategory(string category)
     {
         if (category != currentCategory)
@@ -157,12 +185,24 @@ public class StatsManager : MonoBehaviour
     {
         if (categoryCoolDown <= 0)
         {
-            viewers -= 5;
+            viewers = viewers * 9 / 10;
         }
     }
     private void UpMoney()
     {
-        money = money + viewers / 100;
+        money = money + viewers / moneyRatio;
+        if (flats == 1)
+        {
+            money = money + 500;
+        }
+        if (flats == 2)
+        {
+            money = money + 1000;
+        }
+        if (flats == 3)
+        {
+            money = money + 1500;
+        }
     }
     private void CheckMoney()
     {
@@ -197,6 +237,26 @@ public class StatsManager : MonoBehaviour
         else
         {
             updatesButtons[3].interactable = false;
+        }
+        if (money >= 5000)
+        {
+            updatesButtons[4].interactable = true;
+        }
+        else
+        {
+            updatesButtons[4].interactable = false;
+        }
+        if (money >= 75000)
+        {
+            updatesButtons[5].interactable = true;
+            updatesButtons[6].interactable = true;
+            updatesButtons[7].interactable = true;
+        }
+        else
+        {
+            updatesButtons[5].interactable = false;
+            updatesButtons[6].interactable = false;
+            updatesButtons[7].interactable = false;
         }
     }
     private void CheckStrikes()
