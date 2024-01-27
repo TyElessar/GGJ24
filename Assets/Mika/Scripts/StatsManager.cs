@@ -6,24 +6,26 @@ using TMPro;
 
 public class StatsManager : MonoBehaviour
 {
-    public int viewers, money, strikes, flats;
+    public int viewers, money, strikes;
+    bool flat, crypto;
+    int viewersToAdd = 1;
 
-    [SerializeField] float streamQuality;
     [SerializeField] TextMeshProUGUI moneyText;
     [SerializeField] Button[] updatesButtons;
 
     public float categoryCoolDown;
     [SerializeField] string currentCategory = "null";
     [SerializeField] Image[] categoryButtons;
-    [SerializeField] Sprite[] categorySpritesNonSelected;
-    [SerializeField] Sprite[] categorySpritesSelected;
+    [SerializeField] Sprite[] categorySpritesNonSelected, categorySpritesSelected;
+    [SerializeField] GameObject coolDownZeroNotification;
+    bool coolDownToZeroNoticed = false;
 
     [SerializeField] TextMeshProUGUI viewersText;
 
     [SerializeField] TextMeshProUGUI plusText;
-    [SerializeField] GameObject plusTextParent;
+    [SerializeField] GameObject plusTextParent, nullTextParent;
 
-    [SerializeField] Image banned;
+    [SerializeField] Image strikeImage, bannedImage;
 
     int moneyRatio = 100;
 
@@ -35,10 +37,12 @@ public class StatsManager : MonoBehaviour
     }
     private void Update()
     {
-        CheckMoney();
+        CheckForUpgrades();
         CheckStrikes();
+        CheckCooldown();
 
         plusTextParent.transform.position = Input.mousePosition;
+        nullTextParent.transform.position = Input.mousePosition;
 
         if (money < 10000)
         {
@@ -60,90 +64,96 @@ public class StatsManager : MonoBehaviour
     }
     public void PlusViewers()
     {
-        if (streamQuality == 0 && categoryCoolDown > 3)
+        if (categoryCoolDown < 5f)
+        {
+            nullTextParent.SetActive(true);
+            Invoke("EndPlusText", 0.5f);
+        }
+        else
         {
             Invoke("EndPlusText", 0.5f);
-            viewers += 1;
+            viewers += viewersToAdd;
             plusTextParent.SetActive(true);
             plusTextParent.transform.position = Vector2.zero;
-            plusText.text = "+1";
-        }
-        if (streamQuality == 1 && categoryCoolDown > 5)
-        {
-            Invoke("EndPlusText", 0.5f);
-            viewers += 2;
-            plusTextParent.SetActive(true);
-            plusText.text = "+2";
-        }
-        if (streamQuality == 2 && categoryCoolDown > 5)
-        {
-            Invoke("EndPlusText", 0.5f);
-            viewers += 3;
-            plusTextParent.SetActive(true);
-            plusText.text = "+3";
-        }
-        if (streamQuality == 3 && categoryCoolDown > 5)
-        {
-            Invoke("EndPlusText", 0.5f);
-            viewers += 5;
-            plusTextParent.SetActive(true);
-            plusText.text = "+5";
-        }
-        if (streamQuality == 4 && categoryCoolDown > 5)
-        {
-            Invoke("EndPlusText", 0.5f);
-            viewers += 7;
-            plusTextParent.SetActive(true);
-            plusText.text = "+7";
-        }
-        if (streamQuality == 5 && categoryCoolDown > 5)
-        {
-            Invoke("EndPlusText", 0.5f);
-            viewers += 10;
-            plusTextParent.SetActive(true);
-            plusText.text = "+10";
-        }
-        if (streamQuality == 6 && categoryCoolDown > 5)
-        {
-            Invoke("EndPlusText", 0.5f);
-            viewers += 15;
-            plusTextParent.SetActive(true);
-            plusText.text = "+15";
-        }
-        if (streamQuality == 10 && categoryCoolDown > 5)
-        {
-            Invoke("EndPlusText", 0.5f);
-            viewers += 25;
-            plusTextParent.SetActive(true);
-            plusText.text = "+25";
-        }
-        if (streamQuality > 10 && categoryCoolDown > 5)
-        {
-            Invoke("EndPlusText", 0.5f);
-            viewers += 30;
-            plusTextParent.SetActive(true);
-            plusText.text = "+30";
+            plusText.text = "+" + viewersToAdd;
         }
     }
     private void EndPlusText()
     {
         plusTextParent.SetActive(false);
+        nullTextParent.SetActive(false);
     }
     public void PayMoney(int cost)
     {
         money = money - cost;
     }
-    public void AddQuality(int quality)
+    public void AddViewersMaker(string whichAdd)
     {
-        streamQuality += quality;
+        if (whichAdd == "lightring")
+        {
+            viewersToAdd += 1;
+        }
+        if (whichAdd == "microphone")
+        {
+            viewersToAdd += 2;
+        }
+        if (whichAdd == "gamingchair")
+        {
+            viewersToAdd += 4;
+        }
+        if (whichAdd == "focus")
+        {
+            viewersToAdd += 8;
+        }
+        if (whichAdd == "splitscreen")
+        {
+            viewersToAdd += 16;
+        }
+        if (whichAdd == "PC")
+        {
+            viewersToAdd += 32;
+        }
+        if (whichAdd == "Girlfiend")
+        {
+            viewersToAdd += 64;
+        }
+        if (whichAdd == "Bots")
+        {
+            viewersToAdd += 128;
+        }
     }
-    public void AddMerch()
+    public void AddMoneyRatio(string whichAdd)
     {
-        moneyRatio = moneyRatio - 25;
+        if (whichAdd == "merch")
+        {
+            moneyRatio = moneyRatio - 20;
+        }
+        if (whichAdd == "andorra")
+        {
+            moneyRatio = moneyRatio - 30;
+        }
     }
-    public void AddFlat()
+    public void AddMoneyMaker(string whichAdd)
     {
-        flats++;
+        if (whichAdd == "flat")
+        {
+            flat = true;
+        }
+        if (whichAdd == "crypto")
+        {
+            flat = true;
+        }
+
+    }
+    public void AddStrike()
+    {
+        strikes++;
+        strikeImage.gameObject.SetActive(true);
+        Invoke("DisappearStrikeImage", 1f);
+    }
+    private void DisappearStrikeImage()
+    {
+        strikeImage.gameObject.SetActive(false);
     }
     public void ChangeCategory(string category)
     {
@@ -191,79 +201,243 @@ public class StatsManager : MonoBehaviour
     private void UpMoney()
     {
         money = money + viewers / moneyRatio;
-        if (flats == 1)
+        if (flat)
         {
-            money = money + 500;
+            money = money + 50;
         }
-        if (flats == 2)
+        if (crypto)
         {
-            money = money + 1000;
-        }
-        if (flats == 3)
-        {
-            money = money + 1500;
+            money = money + 150;
         }
     }
-    private void CheckMoney()
+    private void CheckForUpgrades()
     {
-        if (money >= 65)
+        if (money > 0)
         {
-            updatesButtons[0].interactable = true;
+            updatesButtons[0].gameObject.SetActive(true);
+            if (money >= 45)
+            {
+                updatesButtons[0].interactable = true;
+            }
+            else
+            {
+                updatesButtons[0].interactable = false;
+            }
         }
         else
         {
-            updatesButtons[0].interactable = false;
+            updatesButtons[0].gameObject.SetActive(false);
         }
-        if (money >= 100)
+
+        if (money > 0)
         {
+            updatesButtons[1].gameObject.SetActive(true);
+            if (money >= 100)
+            {
             updatesButtons[1].interactable = true;
+            }
+            else
+            {
+                updatesButtons[1].interactable = false;
+            }
         }
         else
         {
-            updatesButtons[1].interactable = false;
+            updatesButtons[1].gameObject.SetActive(false);
         }
-        if (money >= 245)
+
+        if (money > 0)
         {
-            updatesButtons[2].interactable = true;
+            updatesButtons[2].gameObject.SetActive(true);
+            if (money >= 400)
+            {
+                updatesButtons[2].interactable = true;
+            }
+            else
+            {
+                updatesButtons[2].interactable = false;
+            }
         }
         else
         {
-            updatesButtons[2].interactable = false;
+            updatesButtons[2].gameObject.SetActive(false);
         }
-        if (money >= 1200)
+
+        if (money > 0)
         {
-            updatesButtons[3].interactable = true;
+            updatesButtons[3].gameObject.SetActive(true);
+            if (money >= 900)
+            {
+                updatesButtons[3].interactable = true;
+            }
+            else
+            {
+                updatesButtons[3].interactable = false;
+            }
         }
         else
         {
-            updatesButtons[3].interactable = false;
+            updatesButtons[3].gameObject.SetActive(false);
         }
-        if (money >= 5000)
+
+        if (money > 0)
         {
-            updatesButtons[4].interactable = true;
+            updatesButtons[4].gameObject.SetActive(true);
+            if (money >= 1000)
+            {
+                updatesButtons[4].interactable = true;
+            }
+            else
+            {
+                updatesButtons[4].interactable = false;
+            }
         }
         else
         {
-            updatesButtons[4].interactable = false;
+            updatesButtons[4].gameObject.SetActive(false);
         }
-        if (money >= 75000)
+
+        if (money > 0)
         {
-            updatesButtons[5].interactable = true;
-            updatesButtons[6].interactable = true;
-            updatesButtons[7].interactable = true;
+            updatesButtons[5].gameObject.SetActive(true);
+            if (money >= 1500)
+            {
+                updatesButtons[5].interactable = true;
+            }
+            else
+            {
+                updatesButtons[5].interactable = false;
+            }
         }
         else
         {
-            updatesButtons[5].interactable = false;
-            updatesButtons[6].interactable = false;
-            updatesButtons[7].interactable = false;
+            updatesButtons[5].gameObject.SetActive(false);
         }
+
+        if (money > 0)
+        {
+            updatesButtons[6].gameObject.SetActive(true);
+            if (money >= 5000)
+            {
+                updatesButtons[6].interactable = true;
+            }
+            else
+            {
+                updatesButtons[6].interactable = false;
+            }
+        }
+        else
+        {
+            updatesButtons[6].gameObject.SetActive(false);
+        }
+
+        if (money > 0)
+        {
+            updatesButtons[7].gameObject.SetActive(true);
+            if (money >= 7500)
+            {
+                updatesButtons[7].interactable = true;
+            }
+            else
+            {
+                updatesButtons[7].interactable = false;
+            }
+        }
+        else
+        {
+            updatesButtons[7].gameObject.SetActive(false);
+        }
+
+        if (money > 0)
+        {
+            updatesButtons[8].gameObject.SetActive(true);
+            if (money >= 15000)
+            {
+                updatesButtons[8].interactable = true;
+            }
+            else
+            {
+                updatesButtons[8].interactable = false;
+            }
+        }
+        else
+        {
+            updatesButtons[8].gameObject.SetActive(false);
+        }
+
+        if (money > 0)
+        {
+            updatesButtons[9].gameObject.SetActive(true);
+            if (money >= 50000)
+            {
+                updatesButtons[9].interactable = true;
+            }
+            else
+            {
+                updatesButtons[9].interactable = false;
+            }
+        }
+        else
+        {
+            updatesButtons[9].gameObject.SetActive(false);
+        }
+
+        if (money > 0)
+        {
+            updatesButtons[10].gameObject.SetActive(true);
+            if (money >= 100000)
+            {
+                updatesButtons[10].interactable = true;
+            }
+            else
+            {
+                updatesButtons[10].interactable = false;
+            }
+        }
+        else
+        {
+            updatesButtons[10].gameObject.SetActive(false);
+        }
+
+        if (money > 0)
+        {
+            updatesButtons[11].gameObject.SetActive(true);
+            if (money >= 200000)
+            {
+                updatesButtons[11].interactable = true;
+            }
+            else
+            {
+                updatesButtons[11].interactable = false;
+            }
+        }
+        else
+        {
+            updatesButtons[11].gameObject.SetActive(false);
+        }
+
+    }
+    private void CheckCooldown()
+    {
+        if (categoryCoolDown <= 0f && !coolDownToZeroNoticed)
+        {
+            coolDownToZeroNoticed = true;
+            coolDownZeroNotification.transform.position = new Vector2(Random.Range(Screen.width / 5, Screen.width / 5 * 4), Random.Range(Screen.height / 5, Screen.height / 5 * 4));
+        }
+        if (categoryCoolDown > 0)
+        {
+            coolDownToZeroNoticed = false;
+        }
+    }
+    public void QuitCoolDownNotification()
+    {
+        coolDownZeroNotification.transform.position = new Vector2(Screen.width * 5, Screen.height * 5);
     }
     private void CheckStrikes()
     {
         if(strikes == 3)
         {
-            banned.gameObject.SetActive(true);
+            bannedImage.gameObject.SetActive(true);
         }
     }
 }
