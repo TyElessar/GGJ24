@@ -6,10 +6,9 @@ using TMPro;
 
 public class StatsManager : MonoBehaviour
 {
-    public int viewers, money;
+    public int viewers, money, strikes;
 
     [SerializeField] float streamQuality;
-
     [SerializeField] TextMeshProUGUI moneyText;
     [SerializeField] Button[] updatesButtons;
 
@@ -19,15 +18,23 @@ public class StatsManager : MonoBehaviour
     [SerializeField] Sprite[] categorySpritesNonSelected;
     [SerializeField] Sprite[] categorySpritesSelected;
 
+    [SerializeField] TextMeshProUGUI plusText;
+    [SerializeField] GameObject plusTextParent;
+
+    [SerializeField] Image banned;
+
     private void Start()
     {
-        InvokeRepeating("DownViewers", 5, 5);
+        ChangeCategory("JustChatting");
+        InvokeRepeating("DownViewers", 10, 2);
         InvokeRepeating("UpMoney", 1, 1);
     }
     private void Update()
     {
         CheckMoney();
+        CheckStrikes();
         print(viewers);
+        plusTextParent.transform.position = Input.mousePosition;
         moneyText.text = new string(money + "€");
         categoryCoolDown = categoryCoolDown - 1 * Time.deltaTime;
     }
@@ -35,36 +42,72 @@ public class StatsManager : MonoBehaviour
     {
         if (streamQuality == 0 && categoryCoolDown > 3)
         {
+            Invoke("EndPlusText", 0.5f);
             viewers += 1;
+            plusTextParent.SetActive(true);
+            plusTextParent.transform.position = Vector2.zero;
+            plusText.text = "+1";
         }
         if (streamQuality == 1 && categoryCoolDown > 5)
         {
+            Invoke("EndPlusText", 0.5f);
             viewers += 2;
+            plusTextParent.SetActive(true);
+            plusText.text = "+2";
         }
         if (streamQuality == 2 && categoryCoolDown > 5)
         {
+            Invoke("EndPlusText", 0.5f);
             viewers += 3;
+            plusTextParent.SetActive(true);
+            plusText.text = "+3";
         }
         if (streamQuality == 3 && categoryCoolDown > 5)
         {
+            Invoke("EndPlusText", 0.5f);
             viewers += 5;
+            plusTextParent.SetActive(true);
+            plusText.text = "+5";
         }
         if (streamQuality == 4 && categoryCoolDown > 5)
         {
+            Invoke("EndPlusText", 0.5f);
             viewers += 7;
+            plusTextParent.SetActive(true);
+            plusText.text = "+7";
         }
         if (streamQuality == 5 && categoryCoolDown > 5)
         {
+            Invoke("EndPlusText", 0.5f);
             viewers += 10;
+            plusTextParent.SetActive(true);
+            plusText.text = "+10";
+        }
+        if (streamQuality == 6 && categoryCoolDown > 5)
+        {
+            Invoke("EndPlusText", 0.5f);
+            viewers += 15;
+            plusTextParent.SetActive(true);
+            plusText.text = "+15";
         }
         if (streamQuality == 10 && categoryCoolDown > 5)
         {
+            Invoke("EndPlusText", 0.5f);
             viewers += 25;
+            plusTextParent.SetActive(true);
+            plusText.text = "+25";
         }
         if (streamQuality > 10 && categoryCoolDown > 5)
         {
+            Invoke("EndPlusText", 0.5f);
             viewers += 30;
+            plusTextParent.SetActive(true);
+            plusText.text = "+30";
         }
+    }
+    private void EndPlusText()
+    {
+        plusTextParent.SetActive(false);
     }
     public void PayMoney(int cost)
     {
@@ -154,6 +197,13 @@ public class StatsManager : MonoBehaviour
         else
         {
             updatesButtons[3].interactable = false;
+        }
+    }
+    private void CheckStrikes()
+    {
+        if(strikes == 3)
+        {
+            banned.gameObject.SetActive(true);
         }
     }
 }
