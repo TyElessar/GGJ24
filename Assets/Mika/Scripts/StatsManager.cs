@@ -14,6 +14,8 @@ public class StatsManager : MonoBehaviour
     bool don20_0 = false, don20_1 = false, don50_0 = false, don50_1 = false, don50_2 = false, don100_0 = false, don100_1 = false, don100_2 = false,
      don1000_0 = false, don1000_1 = false, don1000_2 = false, don1000_3 = false, don1000_4 = false;
 
+    [SerializeField] Image[] imagesFromStream;
+
     [SerializeField] TextMeshProUGUI moneyText;
     [SerializeField] Button[] updatesButtons;
 
@@ -97,6 +99,10 @@ public class StatsManager : MonoBehaviour
         if (whichAdd == "lightring")
         {
             viewersToAdd += 1;
+            for (int i = 0; i < imagesFromStream.Length; i++)
+            {
+                imagesFromStream[i].color = Color.white;
+            }
         }
         if (whichAdd == "microphone")
         {
