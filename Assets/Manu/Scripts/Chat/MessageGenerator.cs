@@ -51,6 +51,7 @@ public class MessageGenerator : MonoBehaviour {
       Transform child_tr = go.transform.GetChild(0);
       child_tr.gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = userFinalPoolList_[i] + chaterinoPoolText_[0];
       messagePrefab_.SetActive(false);
+      DontDestroyOnLoad(go);
       messageList_.Add(go);
     }
 

@@ -23,14 +23,10 @@ public class GameManager : MonoBehaviour {
 
   void OnDestroy(){
     SceneManager.sceneLoaded -= OnSceneLoad;
-
-
   }
 
-  void Update(){
-    if(Input.GetMouseButton(0)){
-      SceneManager.LoadScene(1, LoadSceneMode.Single);
-    }
+  public void LoadScene(){
+    SceneManager.LoadScene(1, LoadSceneMode.Single);
   }
 
 }

@@ -8,6 +8,10 @@ public class ChatManager : MonoBehaviour {
 
   private void Start(){
     messageGenerator_ = FindObjectOfType<MessageGenerator>();
+    if(null == messageGenerator_) 
+      Debug.Log("No");
+
+
     messageDisplayedList_ = new List<GameObject>();
   }
 
