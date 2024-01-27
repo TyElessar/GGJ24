@@ -10,7 +10,7 @@ public class StatsManager : MonoBehaviour
     bool flat, crypto;
     int viewersToAdd = 1;
 
-    [SerializeField] Animator irl_Anim, minecraft_Anim;
+    [SerializeField] Animator irl_Anim, minecraft_Anim, lol_Anim;
     [SerializeField] float actionCountdown;
 
     [SerializeField] GameObject[] donationNotifs;
@@ -61,11 +61,13 @@ public class StatsManager : MonoBehaviour
         {
             irl_Anim.SetBool("action", true);
             minecraft_Anim.SetBool("action", true);
+            lol_Anim.SetBool("action", true);
         }
         else
         {
             irl_Anim.SetBool("action", false);
             minecraft_Anim.SetBool("action", false);
+            lol_Anim.SetBool("action", false);
         }
 
         actionCountdown = actionCountdown - 1f * Time.deltaTime;
