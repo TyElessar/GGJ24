@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Statistics : MonoBehaviour
+public class Andorra : MonoBehaviour
 {
-    public int Money = 50, Viewers = 50, Health = 50, Strikes = 0;
     // Start is called before the first frame update
     void Start()
     {
