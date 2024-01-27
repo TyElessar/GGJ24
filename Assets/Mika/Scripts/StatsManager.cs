@@ -10,6 +10,9 @@ public class StatsManager : MonoBehaviour
     bool flat, crypto;
     int viewersToAdd = 1;
 
+    [SerializeField] Animator irl_Anim;
+    [SerializeField] float actionCountdown;
+
     [SerializeField] GameObject[] donationNotifs;
     bool don20_0 = false, don20_1 = false, don50_0 = false, don50_1 = false, don50_2 = false, don100_0 = false, don100_1 = false, don100_2 = false,
      don1000_0 = false, don1000_1 = false, don1000_2 = false, don1000_3 = false, don1000_4 = false;
@@ -54,6 +57,17 @@ public class StatsManager : MonoBehaviour
         plusTextParent.transform.position = Input.mousePosition;
         nullTextParent.transform.position = Input.mousePosition;
 
+        if(actionCountdown > 0f)
+        {
+            irl_Anim.SetBool("action", true);
+        }
+        else
+        {
+            irl_Anim.SetBool("action", false);
+        }
+
+        actionCountdown = actionCountdown - 1f * Time.deltaTime;
+
         if (money < 10000)
         {
             moneyText.text = new string(money+ " €");
@@ -74,6 +88,7 @@ public class StatsManager : MonoBehaviour
     }
     public void PlusViewers()
     {
+        actionCountdown = 0.4f;
         if (categoryCoolDown < 5f)
         {
             nullTextParent.SetActive(true);
