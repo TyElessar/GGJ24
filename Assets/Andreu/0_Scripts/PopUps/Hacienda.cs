@@ -13,7 +13,7 @@ public class Hacienda : MonoBehaviour
     {
         Debug.Log("Cuota de autónomo");
         Stats.Money -= Mathf.RoundToInt(Stats.Money*0.25f);
-        Destroy(gameObject);
+        GetPullOut();
     }
     public void NoPagar()
     {
@@ -26,6 +26,14 @@ public class Hacienda : MonoBehaviour
         {
             Debug.Log("Salvadita");
         }
-        Destroy(gameObject);
+        GetPullOut();
+    }
+    public void GetPullIn(Vector2 InScreenPosition)
+    {
+        transform.position = InScreenPosition;
+    }
+    public void GetPullOut()
+    {
+        transform.position = new Vector3(Screen.width * 5, Screen.height * 5, 0f);
     }
 }

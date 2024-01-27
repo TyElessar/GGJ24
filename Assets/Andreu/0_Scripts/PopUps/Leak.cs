@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FotoPolla : MonoBehaviour
+public class Leak : MonoBehaviour
 {
     public bool m_OnScreen = false;
-    public int m_Clicks, m_NeededClicks = 50, ViewersPenalty= 10;
-    public float m_Timer, m_TimeToClick = 10f;
-    public AudioClip m_MoanAudio;
+    private bool m_Invoked = false;
+    public int m_Clicks, m_NeededClicks = 5,
+        m_MoneyPenalty;
+    //public GameObject m_StrikeAlert;
 
     Statistics Stats;
     void Start()
@@ -17,22 +18,26 @@ public class FotoPolla : MonoBehaviour
     }
     void Update()
     {
-        m_Timer -= Time.deltaTime;
-        if (m_Timer <= 0 && m_Clicks > 0)
-        {
-            Stats.Strikes++;
-            GetPullOut();
-        }
-        if (m_Clicks == 0)
+        if (m_NeededClicks <= 0)
         {
             GetPullOut();
         }
+        if (m_OnScreen && !m_Invoked)
+        {
+            InvokeRepeating("BeRobbed", 2f, 2.5f);
+            m_Invoked = true;
+        }
+        else if (!m_OnScreen) CancelInvoke("BeRobbed");
+    }
+    void BeRobbed()
+    {
+        Stats.Money -= m_MoneyPenalty;
     }
     public void Click()
     {
-        if (GetComponent<AudioSource>().clip != m_MoanAudio) GetComponent<AudioSource>().clip = m_MoanAudio;
-        GetComponent<AudioSource>().Play();
-        m_Clicks--;
+        m_NeededClicks--;
+        Vector3 PornPosition = new Vector3(Random.Range(-(Screen.width - 250) / 2, (Screen.width - 250) / 2), Random.Range(-(Screen.height - 250) / 2, (Screen.height - 2) / 2), 0f);
+        transform.localPosition = PornPosition;
     }
     public void GetPullIn(Vector2 InScreenPosition)
     {
@@ -44,10 +49,10 @@ public class FotoPolla : MonoBehaviour
         transform.position = new Vector3(Screen.width * 5, Screen.height * 5, 0f);
         ResetValues();
         m_OnScreen = false;
+        m_Invoked = false;
     }
     public void ResetValues()
     {
         m_Clicks = m_NeededClicks;
-        m_Timer = m_TimeToClick;
     }
 }

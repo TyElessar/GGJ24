@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Collaboration : MonoBehaviour
 {
+    public bool m_OnScreen = false;
     public int m_ViewersAugment,
         m_HealthDecrement,
         m_ViewersDecrement,
@@ -17,12 +18,22 @@ public class Collaboration : MonoBehaviour
     {
         Stats.Viewers += m_ViewersAugment;
         Stats.Health -= m_HealthDecrement;
-        Destroy(gameObject);
+        GetPullOut();
     }
     public void Girl()
     {
         Stats.Viewers -= m_ViewersDecrement;
         Stats.Health += m_HealthAugment;
-        Destroy(gameObject);
+        GetPullOut();
+    }
+    public void GetPullIn(Vector2 InScreenPosition)
+    {
+        transform.position = InScreenPosition;
+        m_OnScreen = true;
+    }
+    public void GetPullOut()
+    {
+        transform.position = new Vector3(Screen.width * 5, Screen.height * 5, 0f);
+        m_OnScreen = false;
     }
 }
