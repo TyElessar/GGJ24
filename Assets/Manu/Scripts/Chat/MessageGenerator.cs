@@ -65,7 +65,6 @@ public class MessageGenerator : MonoBehaviour {
       GetUserNickname(i);
     }
 
-    This is for testing only --- Emote
     for(int i = 0; i < textPool_[(int)TextFile.kUser].Length; ++i){
       GameObject go = Instantiate(textMessagePrefab_);
       Transform child_tr = go.transform.GetChild(0);
