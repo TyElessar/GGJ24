@@ -15,6 +15,7 @@ public class StatsManager : MonoBehaviour
      don1000_0 = false, don1000_1 = false, don1000_2 = false, don1000_3 = false, don1000_4 = false;
 
     [SerializeField] Image[] imagesFromStream;
+    [SerializeField] Sprite newChair;
 
     [SerializeField] TextMeshProUGUI moneyText;
     [SerializeField] Button[] updatesButtons;
@@ -32,6 +33,8 @@ public class StatsManager : MonoBehaviour
     [SerializeField] GameObject plusTextParent, nullTextParent;
 
     [SerializeField] Image strikeImage, bannedImage;
+
+    bool andorra = false;
 
     int moneyRatio = 100;
 
@@ -111,6 +114,7 @@ public class StatsManager : MonoBehaviour
         if (whichAdd == "gamingchair")
         {
             viewersToAdd += 4;
+            imagesFromStream[1].sprite = newChair;
         }
         if (whichAdd == "focus")
         {
@@ -295,7 +299,7 @@ public class StatsManager : MonoBehaviour
     }
     private void CheckForUpgrades()
     {
-        if (money > 0)
+        if (money >= 0)
         {
             updatesButtons[0].gameObject.SetActive(true);
             if (money >= 45)
@@ -312,7 +316,7 @@ public class StatsManager : MonoBehaviour
             updatesButtons[0].gameObject.SetActive(false);
         }
 
-        if (money > 0)
+        if (money >= 0)
         {
             updatesButtons[1].gameObject.SetActive(true);
             if (money >= 100)
@@ -329,7 +333,7 @@ public class StatsManager : MonoBehaviour
             updatesButtons[1].gameObject.SetActive(false);
         }
 
-        if (money > 0)
+        if (money >= 0)
         {
             updatesButtons[2].gameObject.SetActive(true);
             if (money >= 400)
@@ -346,7 +350,7 @@ public class StatsManager : MonoBehaviour
             updatesButtons[2].gameObject.SetActive(false);
         }
 
-        if (money > 0)
+        if (money >= 0)
         {
             updatesButtons[3].gameObject.SetActive(true);
             if (money >= 900)
@@ -363,7 +367,7 @@ public class StatsManager : MonoBehaviour
             updatesButtons[3].gameObject.SetActive(false);
         }
 
-        if (money > 0)
+        if (money >= 0)
         {
             updatesButtons[4].gameObject.SetActive(true);
             if (money >= 1000)
@@ -380,7 +384,7 @@ public class StatsManager : MonoBehaviour
             updatesButtons[4].gameObject.SetActive(false);
         }
 
-        if (money > 0)
+        if (money >= 0)
         {
             updatesButtons[5].gameObject.SetActive(true);
             if (money >= 1500)
@@ -397,7 +401,7 @@ public class StatsManager : MonoBehaviour
             updatesButtons[5].gameObject.SetActive(false);
         }
 
-        if (money > 0)
+        if (money >= 0)
         {
             updatesButtons[6].gameObject.SetActive(true);
             if (money >= 5000)
@@ -414,7 +418,7 @@ public class StatsManager : MonoBehaviour
             updatesButtons[6].gameObject.SetActive(false);
         }
 
-        if (money > 0)
+        if (money >= 0)
         {
             updatesButtons[7].gameObject.SetActive(true);
             if (money >= 7500)
@@ -431,7 +435,7 @@ public class StatsManager : MonoBehaviour
             updatesButtons[7].gameObject.SetActive(false);
         }
 
-        if (money > 0)
+        if (viewers > 10000)
         {
             updatesButtons[8].gameObject.SetActive(true);
             if (money >= 15000)
@@ -448,7 +452,7 @@ public class StatsManager : MonoBehaviour
             updatesButtons[8].gameObject.SetActive(false);
         }
 
-        if (money > 0)
+        if (viewers > 150000)
         {
             updatesButtons[9].gameObject.SetActive(true);
             if (money >= 50000)
@@ -465,7 +469,7 @@ public class StatsManager : MonoBehaviour
             updatesButtons[9].gameObject.SetActive(false);
         }
 
-        if (money > 0)
+        if (viewers > 200000)
         {
             updatesButtons[10].gameObject.SetActive(true);
             if (money >= 100000)
@@ -482,7 +486,7 @@ public class StatsManager : MonoBehaviour
             updatesButtons[10].gameObject.SetActive(false);
         }
 
-        if (money > 0)
+        if (viewers > 250000)
         {
             updatesButtons[11].gameObject.SetActive(true);
             if (money >= 200000)
