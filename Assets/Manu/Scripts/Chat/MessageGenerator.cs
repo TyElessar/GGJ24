@@ -20,7 +20,7 @@ public class MessageGenerator : MonoBehaviour {
   private string[] neutralPoolText_;
   private string[] negativePoolText_;
   private string[] chaterinoPoolText_;
-  public string[] colorPoolText_;
+  private string[] colorPoolText_;
 
   private List<string> userFinalPoolList_;
 
@@ -45,6 +45,7 @@ public class MessageGenerator : MonoBehaviour {
       userFinalPoolList_.Add(GetUserNickname(i));
     }
 
+    //This is for testing only
     for(int i = 0; i < userFinalPoolList_.Count; ++i){
       GameObject go = Instantiate(messagePrefab_);
       Transform child_tr = go.transform.GetChild(0);

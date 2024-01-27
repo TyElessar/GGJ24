@@ -295,6 +295,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1168698125}
   - component: {fileID: 1168698126}
+  - component: {fileID: 1168698127}
   m_Layer: 0
   m_Name: Skippy
   m_TagString: Untagged
@@ -329,6 +330,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50e96314c649da24fa6c5720cb7f8c21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1168698127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168698124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 896c012e54778114a8e9b49b7c3b108c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chaterino_: {fileID: 4900000, guid: 7a47938715b9efb46b60678be01bf61a, type: 3}
+  user_: {fileID: 4900000, guid: b4a4e23a98d161e46bdc320cd1f33d1c, type: 3}
+  possitive_: {fileID: 4900000, guid: 319fe2317209d6d4a9fcfcfad8adc033, type: 3}
+  neutral_: {fileID: 4900000, guid: 9faf4561bff80f0429e4ee3b58630f88, type: 3}
+  negative_: {fileID: 4900000, guid: c7569d0e403bcb1408f3a18ffff9e03a, type: 3}
+  color_: {fileID: 4900000, guid: 28727e3caccdb1d47b96008e5eec6516, type: 3}
+  messagePrefab_: {fileID: 2458376628017715261, guid: 64aa7df3eaeeda04d941aa16ee529c29, type: 3}
+  messageList_: []
 --- !u!1 &1467398335
 GameObject:
   m_ObjectHideFlags: 0
