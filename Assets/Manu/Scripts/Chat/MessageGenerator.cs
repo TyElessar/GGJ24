@@ -102,5 +102,4 @@ public class MessageGenerator : MonoBehaviour {
     userPool_.Add(nick);
   }
 
-
 }
