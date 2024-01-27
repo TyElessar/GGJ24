@@ -33,8 +33,9 @@ public class StatsManager : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI viewersText;
 
-    [SerializeField] TextMeshProUGUI plusText;
+    [SerializeField] TextMeshProUGUI plusText, nullText;
     [SerializeField] GameObject plusTextParent, nullTextParent;
+    bool isGeneratingPlus, isGeneratingNull;
 
     [SerializeField] Image strikeImage, bannedImage;
 
@@ -55,7 +56,9 @@ public class StatsManager : MonoBehaviour
         CheckStrikes();
         CheckCooldown();
 
+
         plusTextParent.transform.position = Input.mousePosition;
+
         nullTextParent.transform.position = Input.mousePosition;
 
         if(actionCountdown > 0f)
@@ -98,11 +101,13 @@ public class StatsManager : MonoBehaviour
         actionCountdown = 0.4f;
         if (categoryCoolDown < 5f)
         {
+            nullText.gameObject.transform.position = Input.mousePosition;
             nullTextParent.SetActive(true);
-            Invoke("EndPlusText", 0.5f);
+            Invoke("EndNullText", 0.5f);
         }
         else
         {
+            plusText.gameObject.transform.position = Input.mousePosition;
             Invoke("EndPlusText", 0.5f);
             viewers += viewersToAdd;
             plusTextParent.SetActive(true);
@@ -112,7 +117,12 @@ public class StatsManager : MonoBehaviour
     }
     private void EndPlusText()
     {
+        isGeneratingPlus = false;
         plusTextParent.SetActive(false);
+    }
+    private void EndNullText()
+    {
+        isGeneratingNull = false;
         nullTextParent.SetActive(false);
     }
     public void PayMoney(int cost)
@@ -190,78 +200,56 @@ public class StatsManager : MonoBehaviour
         }
 
     }
-    public void Donation(int donation)
+    IEnumerator Donation(int donation, string which)
     {
+        yield return new WaitForSeconds(0.4f);
         money = money + donation;
-    }
-    public void Donation2(string donation)
-    {
-        if (donation == "20_0")
+        yield return new WaitForSeconds(3);
+        switch (which)
         {
-            don20_0 = false;
-            donationNotifs[0].transform.position = new Vector2(Screen.width * 5, Screen.height * 5);
-        }
-        if (donation == "20_1")
-        {
-            don20_1 = false;
-            donationNotifs[1].transform.position = new Vector2(Screen.width * 5, Screen.height * 5);
-        }
-        if (donation == "50_0")
-        {
-            don50_0 = false;
-            donationNotifs[2].transform.position = new Vector2(Screen.width * 5, Screen.height * 5);
-        }
-        if (donation == "50_1")
-        {
-            don50_1 = false;
-            donationNotifs[3].transform.position = new Vector2(Screen.width * 5, Screen.height * 5);
-        }
-        if (donation == "50_2")
-        {
-            don50_2 = false;
-            donationNotifs[4].transform.position = new Vector2(Screen.width * 5, Screen.height * 5);
-        }
-        if (donation == "100_0")
-        {
-            don100_0 = false;
-            donationNotifs[5].transform.position = new Vector2(Screen.width * 5, Screen.height * 5);
-        }
-        if (donation == "100_1")
-        {
-            don100_1 = false;
-            donationNotifs[6].transform.position = new Vector2(Screen.width * 5, Screen.height * 5);
-        }
-        if (donation == "100_2")
-        {
-            don100_2 = false;
-            donationNotifs[7].transform.position = new Vector2(Screen.width * 5, Screen.height * 5);
-        }
-        if (donation == "1000_0")
-        {
-            don1000_0 = false;
-            donationNotifs[8].transform.position = new Vector2(Screen.width * 5, Screen.height * 5);
-        }
-        if (donation == "1000_1")
-        {
-            don1000_1 = false;
-            donationNotifs[9].transform.position = new Vector2(Screen.width * 5, Screen.height * 5);
-        }
-        if (donation == "1000_2")
-        {
-            don1000_2 = false;
-            donationNotifs[10].transform.position = new Vector2(Screen.width * 5, Screen.height * 5);
-        }
-        if (donation == "1000_3")
-        {
-            don1000_3 = false;
-            donationNotifs[11].transform.position = new Vector2(Screen.width * 5, Screen.height * 5);
-        }
-        if (donation == "1000_4")
-        {
-            don1000_4 = false;
-            donationNotifs[12].transform.position = new Vector2(Screen.width * 5, Screen.height * 5);
+            case "20_0":
+                don20_0 = false;
+                    break;
+            case "20_1":
+                don20_1 = false;
+                    break;
+            case "50_0":
+                don50_0 = false;
+                    break;
+            case "50_1":
+                don50_1 = false;
+                    break;
+            case "50_2":
+                don50_2 = false;
+                    break;
+            case "100_0":
+                don100_0 = false;
+                    break;
+            case "100_1":
+                don100_1 = false;
+                    break;
+            case "100_2":
+                don100_2 = false;
+                    break;
+            case "1000_0":
+                don1000_0 = false;
+                    break;
+            case "1000_1":
+                don1000_1 = false;
+                    break;
+            case "1000_2":
+                don1000_2 = false;
+                    break;
+            case "1000_3":
+                don1000_3 = false;
+                    break;
+            case "1000_4":
+                don1000_4 = false;
+                    break;
         }
     }
+
+
     public void AddStrike()
     {
         strikes++;
@@ -557,12 +545,14 @@ public class StatsManager : MonoBehaviour
                 if (!don20_0)
                 {
                     don20_0 = true;
-                    donationNotifs[0].transform.position = new Vector2(Random.Range(Screen.width / 5, Screen.width / 5 * 4), Random.Range(Screen.height / 5, Screen.height / 5 * 4));
+                    donationNotifs[0].transform.position = new Vector2(donationNotifs[0].transform.position.x, 0);
+                    StartCoroutine(Donation(20, "20_0"));
                 }
                 else if (!don20_1)
                 {
                     don20_1 = true;
-                    donationNotifs[1].transform.position = new Vector2(Random.Range(Screen.width / 5, Screen.width / 5 * 4), Random.Range(Screen.height / 5, Screen.height / 5 * 4));
+                    donationNotifs[1].transform.position = new Vector2(donationNotifs[0].transform.position.x, 0);
+                    StartCoroutine(Donation(20, "20_1"));
                 }
             }
             if (viewers > 251 && viewers < 1000)
@@ -571,17 +561,20 @@ public class StatsManager : MonoBehaviour
                 if (!don50_0)
                 {
                     don50_0 = true;
-                    donationNotifs[2].transform.position = new Vector2(Random.Range(Screen.width / 5, Screen.width / 5 * 4), Random.Range(Screen.height / 5, Screen.height / 5 * 4));
+                    donationNotifs[2].transform.position = new Vector2(donationNotifs[0].transform.position.x, 0);
+                    StartCoroutine(Donation(50, "50_0"));
                 }
                 else if (!don50_1)
                 {
                     don50_1 = true;
-                    donationNotifs[3].transform.position = new Vector2(Random.Range(Screen.width / 5, Screen.width / 5 * 4), Random.Range(Screen.height / 5, Screen.height / 5 * 4));
+                    donationNotifs[3].transform.position = new Vector2(donationNotifs[0].transform.position.x, 0);
+                    StartCoroutine(Donation(50, "50_1"));
                 }
                 else if (!don50_2)
                 {
                     don50_2 = true;
-                    donationNotifs[4].transform.position = new Vector2(Random.Range(Screen.width / 5, Screen.width / 5 * 4), Random.Range(Screen.height / 5, Screen.height / 5 * 4));
+                    donationNotifs[4].transform.position = new Vector2(donationNotifs[0].transform.position.x, 0);
+                    StartCoroutine(Donation(50, "50_2"));
                 }
             }
             if (viewers > 1001 && viewers < 10000)
@@ -590,18 +583,20 @@ public class StatsManager : MonoBehaviour
                 if (!don100_0)
                 {
                     don100_0 = true; 
-                    donationNotifs[5].transform.position = new Vector2(Random.Range(Screen.width / 5, Screen.width / 5 * 4), Random.Range(Screen.height / 5, Screen.height / 5 * 4));
+                    donationNotifs[5].transform.position = new Vector2(donationNotifs[0].transform.position.x, 0);
+                    StartCoroutine(Donation(100, "100_0"));
                 }
                 else if (!don100_1)
                 {
                     don100_1 = true;
-                    donationNotifs[6].transform.position = new Vector2(Random.Range(Screen.width / 5, Screen.width / 5 * 4), Random.Range(Screen.height / 5, Screen.height / 5 * 4));
-
+                    donationNotifs[6].transform.position = new Vector2(donationNotifs[0].transform.position.x, 0);
+                    StartCoroutine(Donation(100, "100_1"));
                 }
                 else if (!don100_2)
                 {
                     don100_2 = true;
-                    donationNotifs[7].transform.position = new Vector2(Random.Range(Screen.width / 5, Screen.width / 5 * 4), Random.Range(Screen.height / 5, Screen.height / 5 * 4));
+                    donationNotifs[7].transform.position = new Vector2(donationNotifs[0].transform.position.x, 0);
+                    StartCoroutine(Donation(100, "100_2"));
                 }
             }
             if (viewers > 10001)
@@ -610,27 +605,32 @@ public class StatsManager : MonoBehaviour
                 if (!don1000_0)
                 {
                     don1000_0 = true;
-                    donationNotifs[8].transform.position = new Vector2(Random.Range(Screen.width / 5, Screen.width / 5 * 4), Random.Range(Screen.height / 5, Screen.height / 5 * 4));
+                    donationNotifs[8].transform.position = new Vector2(donationNotifs[0].transform.position.x, 0); ;
+                    StartCoroutine(Donation(100, "1000_0"));
                 }
                 else if (!don1000_1)
                 {
                     don1000_1 = true;
-                    donationNotifs[9].transform.position = new Vector2(Random.Range(Screen.width / 5, Screen.width / 5 * 4), Random.Range(Screen.height / 5, Screen.height / 5 * 4));
+                    donationNotifs[9].transform.position = new Vector2(donationNotifs[0].transform.position.x, 0); ;
+                    StartCoroutine(Donation(100, "1000_1"));
                 }
                 else if (!don1000_2)
                 {
                     don1000_2 = true;
-                    donationNotifs[10].transform.position = new Vector2(Random.Range(Screen.width / 5, Screen.width / 5 * 4), Random.Range(Screen.height / 5, Screen.height / 5 * 4));
+                    donationNotifs[10].transform.position = new Vector2(donationNotifs[0].transform.position.x, 0); ;
+                    StartCoroutine(Donation(100, "1000_2"));
                 }
                 else if (!don1000_3)
                 {
                     don1000_3 = true;
-                    donationNotifs[11].transform.position = new Vector2(Random.Range(Screen.width / 5, Screen.width / 5 * 4), Random.Range(Screen.height / 5, Screen.height / 5 * 4));
+                    donationNotifs[11].transform.position = new Vector2(donationNotifs[0].transform.position.x, 0); ;
+                    StartCoroutine(Donation(100, "1000_3"));
                 }
                 else if (!don1000_4)
                 {
                     don1000_4 = true;
-                    donationNotifs[12].transform.position = new Vector2(Random.Range(Screen.width / 5, Screen.width / 5 * 4), Random.Range(Screen.height / 5, Screen.height / 5 * 4));
+                    donationNotifs[12].transform.position = new Vector2(donationNotifs[0].transform.position.x, 0);
+                    StartCoroutine(Donation(100, "1000_4"));
                 }
             }
         }

@@ -4,8 +4,16 @@ using UnityEngine;
 
 public class PlusGoUp : MonoBehaviour
 {
+    [SerializeField] bool slowDown;
     void Update()
     {
-        transform.position = transform.position + Vector3.up * 5000 * Time.deltaTime;
+        if (slowDown)
+        {
+            transform.position = transform.position + Vector3.up * 100 * Time.deltaTime;
+        }
+        else
+        {
+            transform.position = transform.position + Vector3.up * 500 * Time.deltaTime;
+        }
     }
 }
