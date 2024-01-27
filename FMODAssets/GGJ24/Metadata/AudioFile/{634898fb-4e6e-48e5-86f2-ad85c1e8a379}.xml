@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{634898fb-4e6e-48e5-86f2-ad85c1e8a379}">
+		<property name="assetPath">
+			<value>Bruh sound effect.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>1.1232653061224489</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{27fd563c-c9ae-4be9-a994-aa5ca8b5e5de}</destination>
+		</relationship>
+	</object>
+</objects>
