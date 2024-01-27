@@ -10,7 +10,8 @@ public class StatsManager : MonoBehaviour
     bool flat, crypto;
     int viewersToAdd = 1;
 
-    [SerializeField] Animator irl_Anim, minecraft_Anim, lol_Anim;
+    [SerializeField] Animator justChatting_Anim, irl_Anim, minecraft_Anim, lol_Anim;
+    [SerializeField] GameObject micro;
     [SerializeField] float actionCountdown;
 
     [SerializeField] GameObject[] donationNotifs;
@@ -59,12 +60,14 @@ public class StatsManager : MonoBehaviour
 
         if(actionCountdown > 0f)
         {
+            justChatting_Anim.SetBool("action", true);
             irl_Anim.SetBool("action", true);
             minecraft_Anim.SetBool("action", true);
             lol_Anim.SetBool("action", true);
         }
         else
         {
+            justChatting_Anim.SetBool("action", false);
             irl_Anim.SetBool("action", false);
             minecraft_Anim.SetBool("action", false);
             lol_Anim.SetBool("action", false);
@@ -128,6 +131,7 @@ public class StatsManager : MonoBehaviour
         }
         if (whichAdd == "microphone")
         {
+            micro.SetActive(true);
             viewersToAdd += 2;
         }
         if (whichAdd == "gamingchair")
