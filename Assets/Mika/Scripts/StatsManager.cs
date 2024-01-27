@@ -11,6 +11,7 @@ public class StatsManager : MonoBehaviour
     [SerializeField] float streamQuality;
 
     [SerializeField] TextMeshProUGUI moneyText;
+    [SerializeField] Button[] updatesButtons;
 
     public float categoryCoolDown;
     [SerializeField] string currentCategory = "null";
@@ -21,40 +22,57 @@ public class StatsManager : MonoBehaviour
     private void Start()
     {
         InvokeRepeating("DownViewers", 5, 5);
-        InvokeRepeating("UpMoney", 5, 5);
+        InvokeRepeating("UpMoney", 1, 1);
     }
     private void Update()
     {
+        CheckMoney();
         print(viewers);
         moneyText.text = new string(money + "€");
         categoryCoolDown = categoryCoolDown - 1 * Time.deltaTime;
     }
     public void PlusViewers()
     {
-        if (streamQuality <= 20 && categoryCoolDown > 3)
+        if (streamQuality == 0 && categoryCoolDown > 3)
         {
             viewers += 1;
         }
-        if (streamQuality >= 21 && streamQuality <= 40 && categoryCoolDown > 5)
+        if (streamQuality == 1 && categoryCoolDown > 5)
         {
             viewers += 2;
         }
-        if (streamQuality >= 41 && streamQuality <= 60 && categoryCoolDown > 5)
+        if (streamQuality == 2 && categoryCoolDown > 5)
         {
-            viewers += 4;
+            viewers += 3;
         }
-        if (streamQuality >= 61 && streamQuality <= 80 && categoryCoolDown > 5)
+        if (streamQuality == 3 && categoryCoolDown > 5)
         {
-            viewers += 8;
+            viewers += 5;
         }
-        if (streamQuality >= 81 && categoryCoolDown > 5)
+        if (streamQuality == 4 && categoryCoolDown > 5)
         {
-            viewers += 16;
+            viewers += 7;
+        }
+        if (streamQuality == 5 && categoryCoolDown > 5)
+        {
+            viewers += 10;
+        }
+        if (streamQuality == 10 && categoryCoolDown > 5)
+        {
+            viewers += 25;
+        }
+        if (streamQuality > 10 && categoryCoolDown > 5)
+        {
+            viewers += 30;
         }
     }
-    public void AddQuality()
+    public void PayMoney(int cost)
     {
-        streamQuality += 20;
+        money = money - cost;
+    }
+    public void AddQuality(int quality)
+    {
+        streamQuality += quality;
     }
     public void ChangeCategory(string category)
     {
@@ -102,5 +120,40 @@ public class StatsManager : MonoBehaviour
     private void UpMoney()
     {
         money = money + viewers / 100;
+    }
+    private void CheckMoney()
+    {
+        if (money >= 65)
+        {
+            updatesButtons[0].interactable = true;
+        }
+        else
+        {
+            updatesButtons[0].interactable = false;
+        }
+        if (money >= 100)
+        {
+            updatesButtons[1].interactable = true;
+        }
+        else
+        {
+            updatesButtons[1].interactable = false;
+        }
+        if (money >= 245)
+        {
+            updatesButtons[2].interactable = true;
+        }
+        else
+        {
+            updatesButtons[2].interactable = false;
+        }
+        if (money >= 1200)
+        {
+            updatesButtons[3].interactable = true;
+        }
+        else
+        {
+            updatesButtons[3].interactable = false;
+        }
     }
 }
